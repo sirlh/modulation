@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>信号调制</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+</html>
+
+<body>
+    <div class="headline">
+        信号调制
+    </div>
+
+    <div style="text-align: right;">
+        LuHeng. 2021.05.10 
+    </div>
+
+    <div class="content">
+
+        <div class="content_grid">
+            <!-- 输入信号 -->
+            <div class="contentbox"  name="signal_in">
+                <div class="frame_text">输入信号</div>
+
+                <canvas id="inSignal" width="400px" height="300px" ></canvas> 
+            </div>
+
+            <!-- 载波信号 -->
+            <div class="contentbox" name="signal_carrier">
+                <div id="txt1" class="frame_text">载波信号</div>
+
+                <canvas id="carrier_Signal" width="400px" height="300px"></canvas>
+            </div>
+            
+            <!-- 已调制信号 -->
+            <div class="contentbox" name="approximation">
+                <div class="frame_text_long">调制后的信号</div>
+                <canvas id="mo_Signal" width="400px" height="300px"></canvas>
+                    <div class="box" id="box2"></div>
+            </div>
+
+
+
+
+            <!-- 输入信号控制 -->
+            <div class="contentbox" name="einstellungen_signal">
+                <div class="frame_text">输入信号配置</div>
+
+               <div class="setting_grid">
+                    <!-- 输入信号配置 -->
+                    <div class="singlebox">信号源</div>
+                    <div class="doublebox">
+                        <select id="myselect_in" name="menu" > 
+                            <option   value="1">sin函数</option>
+                            <option   value="2">cos函数</option>        
+                            <option   value="3">三角波</option>
+                            <option   value="4">锯齿波</option>
+                            <option   value="5">方波</option>   
+                        </select>
+                    </div>
+                    <!-- 输入信号幅值 -->
+                    <div class="singlebox">幅值</div>
+                    <div class="singlebox">
+                        <input type="range" id="slider_a_in" oninput="in_slider_change()" min= -5.0 max= 5.0 value=1.0 step= "0.1" class="slider"/>
+                    </div>
+
+                    <div class="singlebox">
+                        <input type="number" oninput="in_field_change()" min="-5" max="5" value="1" step = "0.1" id="field_a_in" >
+                    </div>
+                    <!-- 输入信号频率 -->
+                    <div class="singlebox">频率</div>
+                    <div class="singlebox">
+                        <input type="range" oninput="in_slider_change()" id="slider_f_in" min="0.1" max="10" value="1" step = "0.1" class="slider"/>
+                    </div>
+                    <div class="singlebox" >
+                         <input type="number" oninput="in_field_change()" min="0.1" max="10" value="1" step = "0.1" id="field_f_in">
+                    </div>
+                    <!-- 输入信号相位 -->
+                    <div class="singlebox">相位</div>
+                    <div class="singlebox">
+                        <input type="range" oninput="in_slider_change()" id="slider_p_in" min="-10" max="10" value="0" step = "0.1" class="slider"/>
+                    </div>
+                    <div class="singlebox" >
+                        <input type="number" oninput="in_field_change()" min="-10" max="10" value="0" step = "0.1" id="field_p_in">
+                    </div>
+
+                    <!-- 移动 x 轴 -->
+                    <div class="singlebox">缩放 x 轴</div>
+                    <div class="singlebox">
+                        <input type="range" oninput=" in_slider_change()" id="slider_x_in" min="0.1" max="10" value="1" step = "0.1" class="slider"/>
+                    </div>
+                    <div class="singlebox" >
+                        <input type="number" oninput="in_field_change()" min="0.1" max="10" value="1" step = "0.1" id="field_x_in">
+                    </div>
+
+                    <!-- 移动 y 轴 -->
+                    <div class="singlebox">缩放 y 轴</div>
+                    <div class="singlebox">
+                        <input type="range" oninput=" in_slider_change()" id="slider_y_in" min="0.1" max="10" value="1" step = "0.1" class="slider"/>
+                    </div>
+                    <div class="singlebox" >
+                        <input type="number" oninput="in_field_change()" min="0.1" max="10" value="1" step = "0.1" id="field_y_in">
+                    </div>
+
+                    <!-- 是否显示坐标 -->
+                    <div class="triplebox">
+                        <input type="checkbox"  oninput="checkbox_in()"  id="checkbox" name="check_null" value=1>
+                        <label for="checkbox"> 关闭坐标显示</label>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 载波信号控制 -->
+            <div class="contentbox" name="einstellungen_signal">
+                <div class="frame_text">载波信号配置</div>
+               <div class="setting_grid">
+                    <!-- 载波信号配置 -->
+                    <div class="singlebox">信号源</div>
+                    <div class="doublebox">
+                        <select id="myselect_carrier" name="menu" >
+                            <option   value="2">cos函数</option>    
+                            <option   value="1">sin函数</option>     
+                            <option   value="3">三角波</option>
+                            <option   value="4">锯齿波</option>
+                            <option   value="5">方波</option>   
+                        </select>
+                    </div>
+                    <!-- 载波信号幅值 -->
+                    <div class="singlebox">幅值</div>
+                    <div class="singlebox">
+                        <input type="range" id="slider_a_carrier" oninput="carrier_slider_change()" min= -5.0 max= 5.0 value=1.0 step= "0.1" class="slider"/>
+                    </div>
+
+                    <div class="singlebox">
+                        <input type="number" oninput="carrier_field_change()" min="-5" max="5" value="1" step = "0.1" id="field_a_carrier" >
+                    </div>
+                    <!-- 载波信号频率 -->
+                    <div class="singlebox">频率</div>
+                    <div class="singlebox">
+                        <input type="range" oninput="carrier_slider_change()" id="slider_f_carrier" min="1" max="50" value="15" step = "0.1" class="slider"/>
+                    </div>
+                    <div class="singlebox" >
+                         <input type="number" oninput="carrier_field_change()" min="1" max="10" value="15" step = "0.1" id="field_f_carrier">
+                    </div>
+                    <!-- 载波信号相位 -->
+                    <div class="singlebox">相位</div>
+                    <div class="singlebox">
+                        <input type="range" oninput="carrier_slider_change()" id="slider_p_carrier" min="-10" max="10" value="0" step = "0.1" class="slider"/>
+                    </div>
+                    <div class="singlebox" >
+                        <input type="number" oninput="carrier_field_change()" min="-10" max="10" value="0" step = "0.1" id="field_p_carrier">
+                    </div>
+
+                    <!-- 移动 x 轴 -->
+                    <div class="singlebox">缩放 x 轴</div>
+                    <div class="singlebox">
+                        <input type="range" oninput=" carrier_slider_change()" id="slider_x_carrier" min="0.01" max="50" value="1" step = "0.01" class="slider"/>
+                    </div>
+                    <div class="singlebox" >
+                        <input type="number" oninput="carrier_field_change()" min="0.01" max="50" value="1" step = "0.01" id="field_x_carrier">
+                    </div>
+
+                    <!-- 移动 y 轴 -->
+                    <div class="singlebox">缩放 y 轴</div>
+                    <div class="singlebox">
+                        <input type="range" oninput=" carrier_slider_change()" id="slider_y_carrier" min="0.1" max="10" value="1" step = "0.1" class="slider"/>
+                    </div>
+                    <div class="singlebox" >
+                        <input type="number" oninput="carrier_field_change()" min="0.1" max="10" value="1" step = "0.1" id="field_y_carrier">
+                    </div>
+
+                    <!-- 是否显示坐标 -->
+                    <div class="triplebox">
+                        <input type="checkbox"  oninput="checkbox_carrier()"  id="checkbox" name="check_null" value=1>
+                        <label for="checkbox"> 关闭坐标显示</label>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- 已调制信号控制 -->
+            <div class="contentbox" name="einstellungen_approximation">
+                <div class="frame_text">已调制信号配置</div>
+                <div class="setting_grid">
+                    <div class="singlebox">调制方式</div>
+                    <div class="doublebox">
+                        <select id="myselect_mo" name="menu" >   
+                            <option   value="1">AM 调制</option>   
+                            <option   value="2">FM 调制</option>  
+                            <option   value="3">PM 调制</option>   
+                        </select>
+                    </div>
+                    <!-- 移动 x 轴 -->
+                    <div class="singlebox">缩放 x 轴</div>
+                    <div class="singlebox">
+                        <input type="range" oninput=" mo_slider_change()" id="slider_x_mo" min="0.01" max="50" value="1" step = "0.01" class="slider"/>
+                    </div>
+                    <div class="singlebox" >
+                        <input type="number" oninput="mo_field_change()" min="0.01" max="50" value="1" step = "0.01" id="field_x_mo">
+                    </div>
+
+                    <!-- 移动 y 轴 -->
+                    <div class="singlebox">缩放 y 轴</div>
+                    <div class="singlebox">
+                        <input type="range" oninput=" mo_slider_change()" id="slider_y_mo" min="0.1" max="10" value="1" step = "0.1" class="slider"/>
+                    </div>
+                    <div class="singlebox" >
+                        <input type="number" oninput=" mo_field_change()" min="0.1" max="10" value="1" step = "0.1" id="field_y_mo">
+                    </div>
+
+                    <!-- 是否显示坐标 -->
+                    <div class="triplebox">
+                        <input type="checkbox"  oninput="checkbox_mo()"  id="checkbox" name="check_null" value=1>
+                        <label for="checkbox"> 关闭坐标显示</label>
+                    </div>
+    
+                    <div id="am_doc" class="triplebox_framed">
+                        <div class="triplebox_framed">
+                            AM = [(A0+m(t))] * cos(wc * t) 
+                        </div>
+                        <div class="triplebox_framed">
+                            此处设置 A0=1
+                        </div>
+                    </div>
+
+                    <div id="fm_doc" class="triplebox_framed" style="display: none">
+                        <div class="triplebox_framed">
+                            FM = Ac*cos[ wc*t + （f△/fm）* cos(wm*t) ] 
+                        </div>
+                        <div class="triplebox_framed">
+                            此处设置调频灵敏度 f△ = 25
+                        </div>
+                    </div>
+
+                    <div id="pm_doc" class="triplebox_framed" style="display: none">
+                        <div class="triplebox_framed">
+                            PM = Ac*cos[ wc*t + Kp*m(t) ] 
+                        </div>
+                        <div class="triplebox_framed">
+                            此处设置调相灵敏度 Kp = 25
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="./js/wave.js"></script>
+<script type="text/javascript" src="./js/osc.js"></script>
+<script type="text/javascript" src="./js/inSignal.js"></script> 
+<script type="text/javascript" src="./js/carrier_signal.js"></script>
+<script type="text/javascript" src="./js/mo_signal.js"></script>
+
+</html>
